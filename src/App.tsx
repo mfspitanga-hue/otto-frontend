@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import LandingPage from "./components/layout/ProtectedLayout";  // se o nome do arquivo estiver assim
+import Login from "./components/layout/ProtectedLayout";
+import Dashboard from "./components/layout/ProtectedLayout";
+import ProtectedLayout from "./components/layout/ProtectedLayout";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+export default function App() {
+const isAuthenticated = true;
+
+
+return (
+<Router>
+<Routes>
+<Route path="/" element={<LandingPage />} />
+<Route path="/login" element={<Login />} />
+<Route
+path="/dashboard"
+element={
+isAuthenticated ? (
+<ProtectedLayout>
+<Dashboard />
+</ProtectedLayout>
+) : (
+<Navigate to="/login" />
+)
 }
-
-export default App;
+/>
+</Routes>
+</Router>
+);
+}
