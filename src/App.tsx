@@ -1,12 +1,11 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import ProtectedLayout from "./components/layout/ProtectedLayout";
 import LandingPage from "./components/layout/LandingPage";
 import Login from "./components/layout/Login";
 import Dashboard from "./components/layout/Dashboard";
-import ProtectedLayout from "./components/layout/ProtectedLayout";
 
 export default function App() {
-  const isAuthenticated = true; // depois integramos com autenticação real (Supabase ou API OTTO)
+  const isAuthenticated = true; // futuramente conectado ao store (Zustand/Auth)
 
   return (
     <Router>
@@ -14,10 +13,10 @@ export default function App() {
         {/* Página pública inicial */}
         <Route path="/" element={<LandingPage />} />
 
-        {/* Tela de login */}
+        {/* Página de login */}
         <Route path="/login" element={<Login />} />
 
-        {/* Área protegida do sistema */}
+        {/* Área protegida */}
         <Route
           path="/dashboard"
           element={
@@ -26,7 +25,7 @@ export default function App() {
                 <Dashboard />
               </ProtectedLayout>
             ) : (
-              <Navigate to="/login" />
+              <Navigate to="/login" replace />
             )
           }
         />
